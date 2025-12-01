@@ -1,9 +1,41 @@
-<settings>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
     <servers>
+        <!-- Connected App credentials for Exchange + CloudHub deployment -->
         <server>
-            <id>ca.anypoint.credentials</id>
-            <username>~~~Client~~~</username>
-            <password>${CA_CLIENT_ID}~?~${CA_CLIENT_SECRET}</password>
+            <id>anypoint-exchange</id>
+            <username>${env.CA_CLIENT_ID}</username>
+            <password>${env.CA_CLIENT_SECRET}</password>
+        </server>
+
+        <server>
+            <id>anypoint</id>
+            <username>${env.CA_CLIENT_ID}</username>
+            <password>${env.CA_CLIENT_SECRET}</password>
         </server>
     </servers>
+
+    <profiles>
+        <profile>
+            <id>anypoint</id>
+            <properties>
+                <!-- Business Group ID -->
+                <anypoint.businessGroup>${env.BG_ID}</anypoint.businessGroup>
+
+                <!-- CloudHub Environment ID (Sandbox/Production) -->
+                <anypoint.environment>${env.ENV_ID}</anypoint.environment>
+
+                <!-- Anypoint Organization ID -->
+                <anypoint.organisation>${env.ORG_ID}</anypoint.organisation>
+            </properties>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>anypoint</activeProfile>
+    </activeProfiles>
+
 </settings>
